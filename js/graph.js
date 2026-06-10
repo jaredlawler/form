@@ -192,20 +192,54 @@ class MindMap {
       this._zoomAt(mx, my, factor);
     }, { passive: false });
 
-    // touch
+    // touch — one finger pans / drags nodes, two fingers pinch-zoom
+    this._pinch = null;
     c.addEventListener("touchstart", (e) => {
-      if (e.touches.length === 1) this._onDown(e.touches[0].clientX, e.touches[0].clientY);
+      if (e.touches.length === 1) {
+        this._onDown(e.touches[0].clientX, e.touches[0].clientY);
+      } else if (e.touches.length === 2) {
+        this.dragging = false;
+        this.draggingNode = null;
+        this._pinch = this._pinchInfo(e);
+      }
     }, { passive: true });
     c.addEventListener("touchmove", (e) => {
-      if (e.touches.length === 1) this._onMove(e.touches[0].clientX, e.touches[0].clientY);
-    }, { passive: true });
-    c.addEventListener("touchend", () => this._onUp());
+      if (e.touches.length === 1 && !this._pinch) {
+        this._onMove(e.touches[0].clientX, e.touches[0].clientY);
+      } else if (e.touches.length === 2) {
+        e.preventDefault();
+        const p = this._pinchInfo(e);
+        if (this._pinch) {
+          this._zoomAt(p.cx, p.cy, p.dist / this._pinch.dist);
+          this.offsetX += p.cx - this._pinch.cx;
+          this.offsetY += p.cy - this._pinch.cy;
+        }
+        this._pinch = p;
+      }
+    }, { passive: false });
+    c.addEventListener("touchend", (e) => {
+      if (e.touches.length < 2) this._pinch = null;
+      if (e.touches.length === 0) this._onUp();
+    });
 
     c.addEventListener("mousemove", (e) => {
       const rect = c.getBoundingClientRect();
       this.hoverNode = this._hitTest(e.clientX - rect.left, e.clientY - rect.top);
       c.style.cursor = this.hoverNode ? "pointer" : (this.dragging ? "grabbing" : "grab");
     });
+  }
+
+  _pinchInfo(e) {
+    const rect = this.canvas.getBoundingClientRect();
+    const x1 = e.touches[0].clientX - rect.left;
+    const y1 = e.touches[0].clientY - rect.top;
+    const x2 = e.touches[1].clientX - rect.left;
+    const y2 = e.touches[1].clientY - rect.top;
+    return {
+      cx: (x1 + x2) / 2,
+      cy: (y1 + y2) / 2,
+      dist: Math.hypot(x2 - x1, y2 - y1) || 1,
+    };
   }
 
   _screenToWorld(sx, sy) {

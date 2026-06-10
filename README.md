@@ -40,7 +40,14 @@ blocked, the app falls back to a system font and works exactly the same.)
 
 ## Running it
 
-No build step, no dependencies. Either:
+**Live:** https://jaredlawler.github.io/form/ — deployed automatically by
+GitHub Actions on every push (see `.github/workflows/deploy.yml`).
+
+**On your phone:** open the link above, then *Add to Home Screen*
+(Share menu on iOS Safari, browser menu on Android Chrome). It installs as a
+fullscreen app with its own icon and works offline.
+
+**Locally:** no build step, no dependencies. Either:
 
 ```bash
 # just open the file
@@ -50,6 +57,10 @@ open index.html        # macOS  (or: xdg-open index.html on Linux)
 python3 -m http.server 8000
 # then visit http://localhost:8000
 ```
+
+Note: your map lives in each device's local storage, so phone and laptop keep
+separate maps. Use **export** on one device and **import** on the other to
+carry it across.
 
 ## Files
 

@@ -473,20 +473,35 @@ textarea#answer.nudge { animation: nudge 0.3s; }
 
 /* ---- responsive --------------------------------------------------------- */
 @media (max-width: 720px) {
+  .hud { padding: 10px 12px; gap: 12px; flex-wrap: wrap; }
   .regions {
     flex-direction: row;
-    flex-wrap: wrap;
-    top: auto;
-    bottom: 280px;
-    left: 12px; right: 12px;
+    flex-wrap: nowrap;
+    top: 52px;
+    left: 12px; right: 0;
     max-width: none;
-    max-height: 84px;
-    overflow: auto;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    padding-right: 12px;
+    scrollbar-width: none;
   }
+  .regions::-webkit-scrollbar { display: none; }
+  .pill { flex: none; font-size: 12px; padding: 6px 10px; }
   .pill-count { display: none; }
   .panel { width: calc(100vw - 24px); bottom: 12px; }
-  .prompt-text { font-size: 18px; }
-  .detail { top: auto; bottom: 12px; right: 12px; left: 12px; width: auto; max-height: 50vh; }
-  .hud-actions .ghost { padding: 6px 9px; }
+  .panel-inner { padding: 16px 16px 14px; }
+  .prompt-text { font-size: 17px; margin-bottom: 10px; }
+  textarea#answer { font-size: 16px; } /* 16px stops iOS auto-zoom on focus */
+  .hint { display: none; }
+  .detail { top: auto; bottom: 12px; right: 12px; left: 12px; width: auto; max-height: 60vh; }
+  .hud-stats { display: none; }
+  .hud-actions { margin-left: auto; }
+  .hud-actions .ghost { padding: 6px 8px; font-size: 10px; }
   .brand-sub { display: none; }
+}
+
+/* respect notches / home indicators on installed PWAs */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .panel { bottom: max(12px, env(safe-area-inset-bottom)); }
+  .hud { padding-top: max(10px, env(safe-area-inset-top)); }
 }
