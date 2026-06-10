@@ -1,7 +1,7 @@
 /* Service worker: network-first with cache fallback.
    Fresh code when online, full app when offline. Bump VERSION to invalidate. */
 
-const VERSION = "form-v1";
+const VERSION = "form-v2";
 const SHELL = [
   ".",
   "index.html",
@@ -10,6 +10,7 @@ const SHELL = [
   "js/storage.js",
   "js/graph.js",
   "js/app.js",
+  "js/insight.js",
   "manifest.webmanifest",
   "assets/icon-192.png",
   "assets/icon-512.png",

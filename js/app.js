@@ -180,7 +180,12 @@
   }
 
   // ---- detail panel -------------------------------------------------------
+  let currentDetailThought = null;
+
   function openDetail(t) {
+    currentDetailThought = t;
+    const ai = $("#detail-ai");
+    if (ai) { ai.style.display = "none"; ai.innerHTML = ""; }
     const dim = DIMENSION_BY_ID[t.dimId];
     detail.classList.add("open");
     detailDim.textContent = dim.label;
@@ -210,6 +215,7 @@
   }
 
   function closeDetail() {
+    currentDetailThought = null;
     detail.classList.remove("open");
     map.setSelected(null);
   }
@@ -272,6 +278,17 @@
   $("#panel-toggle").addEventListener("click", () => {
     document.body.classList.toggle("panel-collapsed");
   });
+
+  // ---- public hooks (used by insight.js) -----------------------------------
+  window.FormApp = {
+    askQuestion(dimId, text) {
+      pendingFollowup = null;
+      current = { dimId, text };
+      renderPrompt();
+    },
+    getCurrentDetailThought: () => currentDetailThought,
+    refresh,
+  };
 
   // ---- boot ---------------------------------------------------------------
   buildCharge();

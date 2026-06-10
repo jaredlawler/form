@@ -28,15 +28,26 @@ the part of you they belong to.
   tighter into its region and makes it burn brighter.
 - **Filter by region.** Use the left rail to focus inquiry on one part of your
   mind, or roam across all of them.
+- **Insight mode (optional AI analysis).** Press **◉ insight** and Claude reads
+  your whole map: recurring patterns, contradictions between regions, honest
+  reframes, and follow-up questions written for *you* — tap one and it loads
+  into the composer. Every thought also has a **⚡ challenge this** button for
+  a pointed, single-thought push-back. Requires your own Anthropic API key
+  (console.anthropic.com), stored only in your browser; your reflections are
+  sent to the API only when you explicitly ask for a reading, and a full
+  reading typically costs a few cents.
 
 ## Privacy
 
 Everything lives in your browser's `localStorage` on this device. There is no
-server, no account, no telemetry — nothing leaves your machine. Use **export**
-to save a backup file, **import** to restore it, **wipe** to erase everything.
+server, no account, no telemetry — nothing leaves your machine by default. Use
+**export** to save a backup file, **import** to restore it, **wipe** to erase
+everything.
 
-(The only network call is to Google Fonts for the interface typeface; if it's
-blocked, the app falls back to a system font and works exactly the same.)
+Two opt-in network calls exist: Google Fonts for the typeface (falls back to a
+system font if blocked), and **insight mode**, which sends your reflections to
+the Anthropic API *only* when you explicitly press the button, using your own
+key. Set a spend limit on the key in the Anthropic Console for peace of mind.
 
 ## Running it
 

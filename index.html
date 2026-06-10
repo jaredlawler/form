@@ -37,6 +37,7 @@
       <span class="stat"><b id="thought-count">0</b> nodes</span>
     </div>
     <div class="hud-actions">
+      <button id="insight-btn" class="ghost insight" title="AI analysis of your map">◉ insight</button>
       <button id="reset-view" class="ghost" title="Recenter the map">recenter</button>
       <button id="export-btn" class="ghost" title="Download your map as a file">export</button>
       <button id="import-btn" class="ghost" title="Load a map file">import</button>
@@ -83,16 +84,31 @@
     <p class="detail-question" id="detail-question"></p>
     <div class="detail-answer" id="detail-answer"></div>
     <div class="detail-tags" id="detail-tags"></div>
+    <button class="detail-challenge" id="detail-challenge">⚡ challenge this</button>
+    <div class="detail-ai" id="detail-ai" style="display:none"></div>
     <div class="detail-foot">
       <span class="detail-meta" id="detail-meta"></span>
       <button class="detail-delete" id="detail-delete">delete node</button>
     </div>
   </aside>
 
+  <!-- insight modal -->
+  <div class="insight-overlay" id="insight-overlay">
+    <div class="insight-modal">
+      <button class="detail-close" id="insight-close" title="Close">✕</button>
+      <div class="insight-head">
+        <span class="prompt-eyebrow">neural mirror</span>
+        <h2>INSIGHT</h2>
+      </div>
+      <div class="insight-body" id="insight-body"></div>
+    </div>
+  </div>
+
   <script src="js/questions.js"></script>
   <script src="js/storage.js"></script>
   <script src="js/graph.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/insight.js"></script>
   <script>
     // PWA: works offline and installs to the home screen.
     // Skipped on file:// where service workers aren't allowed.
