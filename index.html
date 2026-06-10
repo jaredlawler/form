@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>FORM — consciousness map</title>
+  <meta name="description" content="A private map of how your mind works." />
+  <meta name="theme-color" content="#04060d" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="FORM" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/png" href="assets/icon-192.png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- ambient frame -->
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <!-- the living map -->
+  <canvas id="map"></canvas>
+
+  <!-- top HUD bar -->
+  <header class="hud">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <span class="brand-name">FORM</span>
+      <span class="brand-sub">consciousness map</span>
+    </div>
+    <div class="hud-stats">
+      <span class="stat"><b id="thought-count">0</b> nodes</span>
+    </div>
+    <div class="hud-actions">
+      <button id="insight-btn" class="ghost insight" title="AI analysis of your map">◉ insight</button>
+      <button id="reset-view" class="ghost" title="Recenter the map">recenter</button>
+      <button id="export-btn" class="ghost" title="Download your map as a file">export</button>
+      <button id="import-btn" class="ghost" title="Load a map file">import</button>
+      <button id="wipe-btn" class="ghost danger" title="Erase everything">wipe</button>
+      <input type="file" id="import-file" accept="application/json" hidden />
+    </div>
+  </header>
+
+  <!-- region filter rail -->
+  <nav class="regions" id="dim-pills" aria-label="Regions of mind"></nav>
+
+  <!-- the inquiry composer -->
+  <section class="panel" id="composer">
+    <button id="panel-toggle" class="panel-toggle" title="Collapse / expand">⟨⟩</button>
+    <div class="panel-inner">
+      <div class="prompt-head">
+        <span class="prompt-eyebrow">inquiry</span>
+        <span class="prompt-dim" id="prompt-dim">—</span>
+      </div>
+      <p class="prompt-text" id="prompt-text">…</p>
+
+      <textarea id="answer" placeholder="type freely — no one is reading this but you" rows="4" spellcheck="true"></textarea>
+
+      <div class="charge-row">
+        <span class="charge-label">emotional charge</span>
+        <div class="charge" id="charge"></div>
+      </div>
+
+      <div class="composer-actions">
+        <button id="record-btn" class="primary">
+          <span>record</span>
+          <kbd>⌘⏎</kbd>
+        </button>
+        <button id="skip-btn" class="ghost">another question →</button>
+      </div>
+      <p class="hint">Drag to pan · scroll to zoom · click any node to revisit a thought.</p>
+    </div>
+  </section>
+
+  <!-- node inspector -->
+  <aside class="detail" id="detail">
+    <button class="detail-close" id="detail-close" title="Close">✕</button>
+    <span class="detail-dim" id="detail-dim"></span>
+    <p class="detail-question" id="detail-question"></p>
+    <div class="detail-answer" id="detail-answer"></div>
+    <div class="detail-tags" id="detail-tags"></div>
+    <button class="detail-challenge" id="detail-challenge">⚡ challenge this</button>
+    <div class="detail-ai" id="detail-ai" style="display:none"></div>
+    <div class="detail-foot">
+      <span class="detail-meta" id="detail-meta"></span>
+      <button class="detail-delete" id="detail-delete">delete node</button>
+    </div>
+  </aside>
+
+  <!-- insight modal -->
+  <div class="insight-overlay" id="insight-overlay">
+    <div class="insight-modal">
+      <button class="detail-close" id="insight-close" title="Close">✕</button>
+      <div class="insight-head">
+        <span class="prompt-eyebrow">neural mirror</span>
+        <h2>INSIGHT</h2>
+      </div>
+      <div class="insight-body" id="insight-body"></div>
+    </div>
+  </div>
+
+  <script src="js/questions.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/graph.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/insight.js"></script>
+  <script>
+    // PWA: works offline and installs to the home screen.
+    // Skipped on file:// where service workers aren't allowed.
+    if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+      navigator.serviceWorker.register("sw.js").catch(() => {});
+    }
+  </script>
+</body>
+</html>
